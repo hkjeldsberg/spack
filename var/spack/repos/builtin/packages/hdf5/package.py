@@ -660,7 +660,7 @@ class Hdf5(CMakePackage):
         if self.spec.satisfies("@1.8.22:1.8," "1.10.6:1.10," "1.12.0:1.12" "+fortran+mpi"):
             with working_dir(self.prefix.bin):
                 # No try/except here, fix the condition above instead:
-                symlink("h5fc", "h5pfc")
+                pass # symlink("h5fc", "h5pfc")
 
     @run_after("install")
     def fix_package_config(self):

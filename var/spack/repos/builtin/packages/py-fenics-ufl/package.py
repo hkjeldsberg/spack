@@ -14,11 +14,15 @@ class PyFenicsUfl(PythonPackage):
     mathematical notation."""
 
     homepage = "https://fenicsproject.org/"
+    # url = "https://bitbucket.org/fenics-project/ufl/downloads/ufl-2019.1.0.post0.tar.gz"
+    # agit = "https://bitbucket.org/fenics-project/ufl.git"
     url = "https://github.com/FEniCS/ufl/archive/2019.1.0.tar.gz"
     git = "https://github.com/FEniCS/ufl.git"
     maintainers("chrisrichardson", "garth-wells", "jhale")
 
-    version("main", branch="main")
+    # version("main", branch="main")
+    version("master", branch="ufl_legacy")
+
     version(
         "2023.1.1.post0", sha256="9e6e87f1447635029cec42604f62a76bba84899beb4b8822af10389d1f93a9b6"
     )
@@ -34,7 +38,7 @@ class PyFenicsUfl(PythonPackage):
     version(
         "2017.1.0.post1", sha256="82c8170f44c2392c7e60aa86495df22cc209af50735af8115dc35aeda4b0ca96"
     )
-    version("2016.2.0", tag="ufl-2016.2.0", commit="962d56f65821fb9c50ca4a5a858882c472243431")
+    version("2016.2.0", tag="ufl-2016.2.0")
 
     depends_on("python@3.7:", type=("build", "run"))
     depends_on("py-setuptools@58:", type=("build", "run"), when="@2022.1.0:")

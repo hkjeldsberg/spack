@@ -17,6 +17,8 @@ class PyFenicsFfc(PythonPackage):
     url = "https://bitbucket.org/fenics-project/ffc/downloads/ffc-2019.1.0.post0.tar.gz"
     maintainers("emai-imcs")
 
+    version("master", branch="master")
+
     version(
         "2019.1.0.post0", sha256="306e1179630200a34202975a5369194939b3482eebfc34bc44ad74dab1f109e8"
     )
@@ -31,7 +33,7 @@ class PyFenicsFfc(PythonPackage):
     depends_on("py-setuptools", type=("build", "run"))
     depends_on("py-numpy", type=("build", "run"))
 
-    for ver in ["2019.1.0.post0", "2018.1.0", "2017.2.0.post0", "2016.2.0"]:
+    for ver in ["master", "2019.1.0.post0", "2018.1.0", "2017.2.0.post0", "2016.2.0"]:
         if ver in ["2019.1.0.post0", "2017.2.0.post0"]:
             ver = ver[: ver.rfind(".post")]
         wver = "@" + ver

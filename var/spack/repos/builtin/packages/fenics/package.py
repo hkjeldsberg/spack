@@ -19,6 +19,7 @@ class Fenics(CMakePackage):
     git = "https://bitbucket.org/fenics-project/dolfin.git"
     url = "https://bitbucket.org/fenics-project/dolfin/downloads/dolfin-2019.1.0.post0.tar.gz"
 
+    version("master", branch="master")
     version(
         "2019.1.0.post0", sha256="61abdcdb13684ba2a3ba4afb7ea6c7907aa0896a46439d3af7e8848483d4392f"
     )
@@ -37,7 +38,7 @@ class Fenics(CMakePackage):
         deprecated=True,
     )
 
-    dolfin_versions = ["2019.1.0", "2018.1.0", "2017.2.0", "2016.2.0"]
+    dolfin_versions = ["master", "2019.1.0", "2018.1.0", "2017.2.0", "2016.2.0"]
 
     variant("python", default=True, description="Compile with Python interface")
     variant("hdf5", default=True, description="Compile with HDF5")
@@ -134,7 +135,7 @@ class Fenics(CMakePackage):
     depends_on("suite-sparse", when="+suite-sparse")
     depends_on("qt", when="+qt")
 
-    depends_on("py-pybind11@2.2.4", type=("build", "run"))
+    depends_on("py-pybind11@2.2.4:", type=("build", "run"))
     depends_on("cmake@3.17.3:", type="build")
 
     depends_on("py-pip", when="+python", type="build")
