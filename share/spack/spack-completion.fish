@@ -890,7 +890,7 @@ complete -c spack -n '__fish_spack_using_command change' -s a -l all -f -a all
 complete -c spack -n '__fish_spack_using_command change' -s a -l all -d 'change all matching specs (allow changing more than one spec)'
 
 # spack checksum
-set -g __fish_spack_optspecs_spack_checksum h/help keep-stage b/batch l/latest p/preferred a/add-to-package verify
+set -g __fish_spack_optspecs_spack_checksum h/help keep-stage b/batch l/latest p/preferred a/add-to-package verify j/jobs=
 complete -c spack -n '__fish_spack_using_command_pos 0 checksum' -f -a '(__fish_spack_packages)'
 complete -c spack -n '__fish_spack_using_command_pos_remainder 1 checksum' -f -a '(__fish_spack_package_versions $__fish_spack_argparse_argv[1])'
 complete -c spack -n '__fish_spack_using_command checksum' -s h -l help -f -a help
@@ -907,6 +907,8 @@ complete -c spack -n '__fish_spack_using_command checksum' -s a -l add-to-packag
 complete -c spack -n '__fish_spack_using_command checksum' -s a -l add-to-package -d 'add new versions to package'
 complete -c spack -n '__fish_spack_using_command checksum' -l verify -f -a verify
 complete -c spack -n '__fish_spack_using_command checksum' -l verify -d 'verify known package checksums'
+complete -c spack -n '__fish_spack_using_command checksum' -s j -l jobs -r -f -a jobs
+complete -c spack -n '__fish_spack_using_command checksum' -s j -l jobs -r -d 'explicitly set number of parallel jobs'
 
 # spack ci
 set -g __fish_spack_optspecs_spack_ci h/help
@@ -1273,7 +1275,7 @@ complete -c spack -n '__fish_spack_using_command dependencies' -s i -l installed
 complete -c spack -n '__fish_spack_using_command dependencies' -s t -l transitive -f -a transitive
 complete -c spack -n '__fish_spack_using_command dependencies' -s t -l transitive -d 'show all transitive dependencies'
 complete -c spack -n '__fish_spack_using_command dependencies' -l deptype -r -f -a deptype
-complete -c spack -n '__fish_spack_using_command dependencies' -l deptype -r -d 'comma-separated list of deptypes to traverse'
+complete -c spack -n '__fish_spack_using_command dependencies' -l deptype -r -d 'comma-separated list of deptypes to traverse (default=build,link,run,test)'
 complete -c spack -n '__fish_spack_using_command dependencies' -s V -l no-expand-virtuals -f -a expand_virtuals
 complete -c spack -n '__fish_spack_using_command dependencies' -s V -l no-expand-virtuals -d 'do not expand virtual dependencies'
 
@@ -1442,7 +1444,7 @@ complete -c spack -n '__fish_spack_using_command env activate' -s d -l dir -r -f
 complete -c spack -n '__fish_spack_using_command env activate' -s d -l dir -r -d 'activate the environment in this directory'
 
 # spack env deactivate
-set -g __fish_spack_optspecs_spack_env_deactivate h/help sh csh fish bat
+set -g __fish_spack_optspecs_spack_env_deactivate h/help sh csh fish bat pwsh
 complete -c spack -n '__fish_spack_using_command env deactivate' -s h -l help -f -a help
 complete -c spack -n '__fish_spack_using_command env deactivate' -s h -l help -d 'show this help message and exit'
 complete -c spack -n '__fish_spack_using_command env deactivate' -l sh -f -a shell
@@ -1453,6 +1455,8 @@ complete -c spack -n '__fish_spack_using_command env deactivate' -l fish -f -a s
 complete -c spack -n '__fish_spack_using_command env deactivate' -l fish -d 'print fish commands to activate the environment'
 complete -c spack -n '__fish_spack_using_command env deactivate' -l bat -f -a shell
 complete -c spack -n '__fish_spack_using_command env deactivate' -l bat -d 'print bat commands to activate the environment'
+complete -c spack -n '__fish_spack_using_command env deactivate' -l pwsh -f -a shell
+complete -c spack -n '__fish_spack_using_command env deactivate' -l pwsh -d 'print pwsh commands to activate the environment'
 
 # spack env create
 set -g __fish_spack_optspecs_spack_env_create h/help d/dir keep-relative without-view with-view=
@@ -1584,7 +1588,7 @@ complete -c spack -n '__fish_spack_using_command external' -s h -l help -f -a he
 complete -c spack -n '__fish_spack_using_command external' -s h -l help -d 'show this help message and exit'
 
 # spack external find
-set -g __fish_spack_optspecs_spack_external_find h/help not-buildable exclude= p/path= scope= all t/tag=
+set -g __fish_spack_optspecs_spack_external_find h/help not-buildable exclude= p/path= scope= all t/tag= j/jobs=
 
 complete -c spack -n '__fish_spack_using_command external find' -s h -l help -f -a help
 complete -c spack -n '__fish_spack_using_command external find' -s h -l help -d 'show this help message and exit'
@@ -1600,6 +1604,8 @@ complete -c spack -n '__fish_spack_using_command external find' -l all -f -a all
 complete -c spack -n '__fish_spack_using_command external find' -l all -d 'search for all packages that Spack knows about'
 complete -c spack -n '__fish_spack_using_command external find' -s t -l tag -r -f -a tags
 complete -c spack -n '__fish_spack_using_command external find' -s t -l tag -r -d 'filter a package query by tag (multiple use allowed)'
+complete -c spack -n '__fish_spack_using_command external find' -s j -l jobs -r -f -a jobs
+complete -c spack -n '__fish_spack_using_command external find' -s j -l jobs -r -d 'explicitly set number of parallel jobs'
 
 # spack external list
 set -g __fish_spack_optspecs_spack_external_list h/help
@@ -1811,7 +1817,7 @@ complete -c spack -n '__fish_spack_using_command graph' -s c -l color -d 'use di
 complete -c spack -n '__fish_spack_using_command graph' -s i -l installed -f -a installed
 complete -c spack -n '__fish_spack_using_command graph' -s i -l installed -d 'graph installed specs, or specs in the active env (implies --dot)'
 complete -c spack -n '__fish_spack_using_command graph' -l deptype -r -f -a deptype
-complete -c spack -n '__fish_spack_using_command graph' -l deptype -r -d 'comma-separated list of deptypes to traverse'
+complete -c spack -n '__fish_spack_using_command graph' -l deptype -r -d 'comma-separated list of deptypes to traverse (default=build,link,run,test)'
 
 # spack help
 set -g __fish_spack_optspecs_spack_help h/help a/all spec
@@ -1972,7 +1978,7 @@ complete -c spack -n '__fish_spack_using_command list' -l update -r -f -a update
 complete -c spack -n '__fish_spack_using_command list' -l update -r -d 'write output to the specified file, if any package is newer'
 
 # spack load
-set -g __fish_spack_optspecs_spack_load h/help sh csh fish bat first only= list
+set -g __fish_spack_optspecs_spack_load h/help sh csh fish bat pwsh first only= list
 complete -c spack -n '__fish_spack_using_command_pos_remainder 0 load' -f -a '(__fish_spack_installed_specs)'
 complete -c spack -n '__fish_spack_using_command load' -s h -l help -f -a help
 complete -c spack -n '__fish_spack_using_command load' -s h -l help -d 'show this help message and exit'
@@ -1984,6 +1990,8 @@ complete -c spack -n '__fish_spack_using_command load' -l fish -f -a shell
 complete -c spack -n '__fish_spack_using_command load' -l fish -d 'print fish commands to load the package'
 complete -c spack -n '__fish_spack_using_command load' -l bat -f -a shell
 complete -c spack -n '__fish_spack_using_command load' -l bat -d 'print bat commands to load the package'
+complete -c spack -n '__fish_spack_using_command load' -l pwsh -f -a shell
+complete -c spack -n '__fish_spack_using_command load' -l pwsh -d 'print pwsh commands to load the package'
 complete -c spack -n '__fish_spack_using_command load' -l first -f -a load_first
 complete -c spack -n '__fish_spack_using_command load' -l first -d 'load the first match if multiple packages match the spec'
 complete -c spack -n '__fish_spack_using_command load' -l only -r -f -a 'package dependencies'
@@ -2845,7 +2853,7 @@ complete -c spack -n '__fish_spack_using_command unit-test' -l showlocals -f -a 
 complete -c spack -n '__fish_spack_using_command unit-test' -l showlocals -d 'show local variable values in tracebacks'
 
 # spack unload
-set -g __fish_spack_optspecs_spack_unload h/help sh csh fish bat a/all
+set -g __fish_spack_optspecs_spack_unload h/help sh csh fish bat pwsh a/all
 complete -c spack -n '__fish_spack_using_command_pos_remainder 0 unload' -f -a '(__fish_spack_installed_specs)'
 complete -c spack -n '__fish_spack_using_command unload' -s h -l help -f -a help
 complete -c spack -n '__fish_spack_using_command unload' -s h -l help -d 'show this help message and exit'
@@ -2857,6 +2865,8 @@ complete -c spack -n '__fish_spack_using_command unload' -l fish -f -a shell
 complete -c spack -n '__fish_spack_using_command unload' -l fish -d 'print fish commands to load the package'
 complete -c spack -n '__fish_spack_using_command unload' -l bat -f -a shell
 complete -c spack -n '__fish_spack_using_command unload' -l bat -d 'print bat commands to load the package'
+complete -c spack -n '__fish_spack_using_command unload' -l pwsh -f -a shell
+complete -c spack -n '__fish_spack_using_command unload' -l pwsh -d 'print pwsh commands to load the package'
 complete -c spack -n '__fish_spack_using_command unload' -s a -l all -f -a all
 complete -c spack -n '__fish_spack_using_command unload' -s a -l all -d 'unload all loaded Spack packages'
 
@@ -2923,7 +2933,7 @@ complete -c spack -n '__fish_spack_using_command verify' -s f -l files -f -a typ
 complete -c spack -n '__fish_spack_using_command verify' -s f -l files -d 'treat entries as absolute filenames'
 
 # spack versions
-set -g __fish_spack_optspecs_spack_versions h/help s/safe safe-only r/remote n/new c/concurrency=
+set -g __fish_spack_optspecs_spack_versions h/help s/safe safe-only r/remote n/new j/jobs=
 complete -c spack -n '__fish_spack_using_command_pos 0 versions' -f -a '(__fish_spack_packages)'
 complete -c spack -n '__fish_spack_using_command versions' -s h -l help -f -a help
 complete -c spack -n '__fish_spack_using_command versions' -s h -l help -d 'show this help message and exit'
@@ -2935,8 +2945,8 @@ complete -c spack -n '__fish_spack_using_command versions' -s r -l remote -f -a 
 complete -c spack -n '__fish_spack_using_command versions' -s r -l remote -d 'only list remote versions of the package'
 complete -c spack -n '__fish_spack_using_command versions' -s n -l new -f -a new
 complete -c spack -n '__fish_spack_using_command versions' -s n -l new -d 'only list remote versions newer than the latest checksummed version'
-complete -c spack -n '__fish_spack_using_command versions' -s c -l concurrency -r -f -a concurrency
-complete -c spack -n '__fish_spack_using_command versions' -s c -l concurrency -r -d 'number of concurrent requests'
+complete -c spack -n '__fish_spack_using_command versions' -s j -l jobs -r -f -a jobs
+complete -c spack -n '__fish_spack_using_command versions' -s j -l jobs -r -d 'explicitly set number of parallel jobs'
 
 # spack view
 set -g __fish_spack_optspecs_spack_view h/help v/verbose e/exclude= d/dependencies=
